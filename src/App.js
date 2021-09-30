@@ -2,9 +2,9 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { buttonStyle, inputCss, mainbody, tickStyle } from './css';
+import { buttonStyle, inputCss, mainBody, tickStyle } from './css';
 
-const baseUrl = 'http://localhost:5000';
+const baseUrl = 'https://kalsang-guestlist.herokuapp.com';
 
 export default function GuestList() {
   const [newFirstName, setNewFirstName] = useState('');
@@ -16,7 +16,7 @@ export default function GuestList() {
   };
 
   async function getUser() {
-    const response = await fetch('http://localhost:5000');
+    const response = await fetch('https://kalsang-guestlist.herokuapp.com');
     const allGuests = await response.json();
     console.log(allGuests);
     setGuestList(allGuests);
@@ -85,7 +85,7 @@ export default function GuestList() {
   }
 
   return (
-    <div css={mainbody}>
+    <div css={mainBody}>
       <h1>UpLeveled Graduation Party</h1>
       <label>
         First Name:
