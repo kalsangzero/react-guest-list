@@ -22,7 +22,7 @@ export default function GuestList() {
     setGuestList(allGuests);
   }
 
-  //to run in the first render kept []empty
+  // to run in the first render kept []empty
   useEffect(() => {
     getUser();
   }, []);
@@ -39,7 +39,7 @@ export default function GuestList() {
       },
       body: JSON.stringify({ firstName: newFirstName, lastName: newLastName }),
     });
-    //it waits for the response await
+    // it waits for the response await
     const createdGuest = await response.json();
     if (!newFirstName.trim() || !newLastName.trim()) {
       alert('Please Enter Full Name');
@@ -78,7 +78,7 @@ export default function GuestList() {
     const deletedGuest = await response.json();
 
     const cancelAttendance = [...guestList].filter(
-      (user) => user.id !== deletedGuest.id,
+      (guest) => guest.id !== deletedGuest.id,
     );
     setGuestList(cancelAttendance);
     console.log('which guest is removed:', deletedGuest);
