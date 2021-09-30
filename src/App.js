@@ -2,7 +2,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { ButtonStyle, InputCss, Mainbody, TickStyle } from './css';
+import { buttonStyle, inputCss, mainbody, tickStyle } from './css';
 
 const baseUrl = 'http://localhost:5000';
 
@@ -85,12 +85,12 @@ export default function GuestList() {
   }
 
   return (
-    <div css={Mainbody}>
+    <div css={mainbody}>
       <h1>UpLeveled Graduation Party</h1>
       <label>
         First Name:
         <input
-          css={InputCss}
+          css={inputCss}
           value={newFirstName}
           onChange={(event) =>
             setNewFirstName(event.currentTarget.value.toUpperCase())
@@ -101,7 +101,7 @@ export default function GuestList() {
       <label>
         Last Name:
         <input
-          css={InputCss}
+          css={inputCss}
           value={newLastName}
           onChange={(event) =>
             setNewLastName(event.currentTarget.value.toUpperCase())
@@ -110,21 +110,21 @@ export default function GuestList() {
       </label>
       <br />
       <button
-        css={ButtonStyle}
+        css={buttonStyle}
         className="btn"
         onClick={() => createNewGuest()}
       >
         Add to List
       </button>
       {/* Reset button */}
-      <button css={ButtonStyle} onClick={resetInputField}>
+      <button css={buttonStyle} onClick={resetInputField}>
         Reset
       </button>
       <br />
       <h2>List of Guest</h2>
       <p>
         GUEST ATTENDING
-        <input css={TickStyle} checked={true} readOnly type="checkbox" />
+        <input css={tickStyle} checked={true} readOnly type="checkbox" />
       </p>
       <ol>
         {guestList.map((user) => {
@@ -132,7 +132,7 @@ export default function GuestList() {
             <li key={user.id}>
               {user.firstName} {user.lastName}
               <input
-                css={TickStyle}
+                css={tickStyle}
                 checked={user.attending}
                 type="checkbox"
                 onChange={(e) => {
@@ -141,7 +141,7 @@ export default function GuestList() {
               />
               {/* the onclick doesnt need e target  */}
               <button
-                css={ButtonStyle}
+                css={buttonStyle}
                 className="btn"
                 onClick={() => getDeleteGuest(user)}
               >

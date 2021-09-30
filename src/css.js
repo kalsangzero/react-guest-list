@@ -3,7 +3,7 @@
 import { css } from '@emotion/react';
 import partyBackground from '../src/img/partyBackground.png';
 
-export const Mainbody = css`
+export const mainBody = css`
   width: 500px;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 50px;
@@ -35,15 +35,15 @@ export const globalStyle = css`
     color: white;
   }
 `;
-export const InputCss = css`
+export const inputCss = css`
   border-radius: 5px;
   margin: 0 5px 10px;
 `;
 
-export const ButtonStyle = css`
+export const buttonStyle = css`
   border-radius: 5px;
   margin: 0 5px 10px;
 `;
-export const TickStyle = css`
+export const tickStyle = css`
   margin: 0 50px 0 20px;
 `;
