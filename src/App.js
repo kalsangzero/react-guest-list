@@ -22,7 +22,7 @@ export default function GuestList() {
     setNewFirstName('');
     setNewLastName('');
   };
-  const [done, setDone] = useState(undefined);
+  const [done, setDone] = useState(false);
 
   async function getUser() {
     const response = await fetch('https://kalsang-guestlist.herokuapp.com');
@@ -34,14 +34,8 @@ export default function GuestList() {
   // to run in the first render kept []empty
   useEffect(() => {
     setTimeout(() => {
-      fetch('https://kalsang-guestlist.herokuapp.com')
-        .then((response) => response.json())
-        .then((json) => {
-          console.log(json);
-          setGuestList(json);
-          // setDone is only true  after the page is fetched.
-          setDone(true);
-        });
+      // setDone is only true  after the page is fetched.
+      setDone(true);
     }, 2000);
     getUser();
   }, []);
@@ -103,7 +97,6 @@ export default function GuestList() {
     console.log('which guest is removed:', deletedGuest);
   }
   // isEEnabled is null till fetching is done, therefore nothing could be entered till then.
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const isEnabled = done ? true : null;
 
   return (
@@ -152,7 +145,6 @@ export default function GuestList() {
         <input css={tickStyle} checked={true} readOnly type="checkbox" />
       </p>
       <div css={list}>
-        {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
         {!done ? (
           <ReactLoading
             type="bars"
