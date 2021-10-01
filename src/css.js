@@ -44,6 +44,15 @@ export const buttonStyle = css`
   border-radius: 5px;
   margin: 0 5px 10px;
 `;
+
 export const tickStyle = css`
   margin: 0 50px 0 20px;
+`;
+export const h1tick = css`
+  margin: 0 20px;
+`;
+export const list = css`
+  text-align: center;
+  justify-content: center;
+  display: flex;
 `;

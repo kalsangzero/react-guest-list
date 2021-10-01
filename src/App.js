@@ -2,7 +2,15 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { buttonStyle, inputCss, mainBody, tickStyle } from './css';
+import ReactLoading from 'react-loading';
+import {
+  buttonStyle,
+  h1tick,
+  inputCss,
+  list,
+  mainBody,
+  tickStyle,
+} from './css';
 
 const baseUrl = 'https://kalsang-guestlist.herokuapp.com';
 
@@ -14,6 +22,7 @@ export default function GuestList() {
     setNewFirstName('');
     setNewLastName('');
   };
+  const [done, setDone] = useState(undefined);
 
   async function getUser() {
     const response = await fetch('https://kalsang-guestlist.herokuapp.com');
@@ -24,6 +33,16 @@ export default function GuestList() {
 
   // to run in the first render kept []empty
   useEffect(() => {
+    setTimeout(() => {
+      fetch('https://kalsang-guestlist.herokuapp.com')
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json);
+          setGuestList(json);
+          // setDone is only true  after the page is fetched.
+          setDone(true);
+        });
+    }, 2000);
     getUser();
   }, []);
   // if loading is not put undefined might occur because not read
@@ -83,6 +102,9 @@ export default function GuestList() {
     setGuestList(cancelAttendance);
     console.log('which guest is removed:', deletedGuest);
   }
+  // isEEnabled is null till fetching is done, therefore nothing could be entered till then.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  const isEnabled = done ? true : null;
 
   return (
     <div css={mainBody}>
@@ -90,6 +112,7 @@ export default function GuestList() {
       <label>
         First Name:
         <input
+          disabled={!isEnabled}
           css={inputCss}
           value={newFirstName}
           onChange={(event) =>
@@ -101,6 +124,7 @@ export default function GuestList() {
       <label>
         Last Name:
         <input
+          disabled={!isEnabled}
           css={inputCss}
           value={newLastName}
           onChange={(event) =>
@@ -121,37 +145,50 @@ export default function GuestList() {
         Reset
       </button>
       <br />
+
       <h2>List of Guest</h2>
-      <p>
+      <p css={h1tick}>
         GUEST ATTENDING
         <input css={tickStyle} checked={true} readOnly type="checkbox" />
       </p>
-      <ol>
-        {guestList.map((user) => {
-          return (
-            <li key={user.id}>
-              {user.firstName} {user.lastName}
-              <input
-                css={tickStyle}
-                checked={user.attending}
-                type="checkbox"
-                onChange={(e) => {
-                  isAttending(user.id, e.currentTarget.checked);
-                }}
-              />
-              {/* the onclick doesnt need e target  */}
-              <button
-                css={buttonStyle}
-                className="btn"
-                onClick={() => getDeleteGuest(user)}
-              >
-                <span>remove🗑</span>
-              </button>
-            </li>
-          );
-        })}
-      </ol>
-
+      <div css={list}>
+        {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
+        {!done ? (
+          <ReactLoading
+            type="bars"
+            color="white"
+            height={50}
+            width={50}
+            justify-content="center"
+          />
+        ) : (
+          <ol>
+            {guestList.map((user) => {
+              return (
+                <li key={user.id}>
+                  {user.firstName} {user.lastName}
+                  <input
+                    css={tickStyle}
+                    checked={user.attending}
+                    type="checkbox"
+                    onChange={(e) => {
+                      isAttending(user.id, e.currentTarget.checked);
+                    }}
+                  />
+                  {/* the onclick doesnt need e target  */}
+                  <button
+                    css={buttonStyle}
+                    className="btn"
+                    onClick={() => getDeleteGuest(user)}
+                  >
+                    <span>remove🗑</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        )}
+      </div>
       <br />
     </div>
   );
